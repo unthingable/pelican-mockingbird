@@ -1,4 +1,4 @@
-{% macro ephemeral_nav_link(what, where, selected=False) -%}
+{%- macro ephemeral_nav_link(what, where, selected=False) -%}
 <li class="ephemeral{%- if selected %} selected{% endif %}"><a href="{{ SITEURL }}/{{ where }}">{{what}}</a></li>
 {%- endmacro -%}
 
@@ -24,14 +24,19 @@
         {% if SITENAME -%}
         <div id="header">
             <ul id="nav">
-                {%- block ephemeral_nav %}{%- endblock %}
+                <!-- {%- block ephemeral_nav %}{%- endblock -%} -->
 
                 <li {%- if output_file == "index.html" %} class="selected"{% endif %}><a href="{{ SITEURL }}">Home</a></li>
                 {% if DISPLAY_PAGES_ON_MENU -%}
                 {% for page in PAGES -%}
                 <li {%- if output_file == page.url %} class="selected"{% endif %}><a href="{{ SITEURL }}/{{ page.url }}">{{ page.title }}</a></li>
                 {% endfor -%}
-				{% endif -%}
+				        {% endif -%}
+          {% if DISPLAY_CATEGORIES_ON_MENU %}
+            {% for cat, null in categories %}
+              <li{% if cat == category %} class="selected"{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a></li>
+            {% endfor %}
+          {% endif %}
 
                 <li {%- if output_file == "archives.html" %} class="selected"{% endif %}><a href="{{ SITEURL }}/archives.html">Archives</a></li>
             </ul>
@@ -53,7 +58,7 @@
                 <div class="clear"></div>
                 <div id="footer">
                     <p>
-                    Mockingbird theme by <a href="http://nevanscott.com/">Nevan Scott</a>
+                    modified Mockingbird theme by <a href="http://nevanscott.com/">Nevan Scott</a>
                     &middot;
                     <a class="atom" href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}">Feed</a>
                 </div>

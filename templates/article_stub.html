@@ -15,18 +15,18 @@
                     <div class="clear"></div>
                     <div class="info">
                         {% if article.pinned -%}
-                        <a href="{{ SITEURL }}/{{ article.url }}">posted {{ article.date.strftime("%B %d, %I:%M %Y") }}</a>
-                        {%- else -%}
-                        <a href="{{ SITEURL }}/{{ article.url }}">posted at {{ article.date.strftime("%I:%M %Y") }}</a>
-                        {%- if article.category.name != "Uncategorized" -%}
-                        &nbsp;&middot;&nbsp;<a href="{{ SITEURL }}/{{ article.category.url }}" rel="tag">{{ article.category }}</a>
-                        {%- endif %}
+                          <a href="{{ SITEURL }}/{{ article.url }}">posted {{ article.date.strftime("%B %e, %l:%M %Y") }}</a>
+                          {%- else -%}
+                          <a href="{{ SITEURL }}/{{ article.url }}">posted at {{ article.date.strftime("%l:%M %Y") }}</a>
+                          {%- if article.category.name != "Uncategorized" -%}
+                          &nbsp;&middot;&nbsp;<a href="{{ SITEURL }}/{{ article.category.url }}" rel="tag">{{ article.category }}</a>
+                          {%- endif %}
                         {% if article.tags %}
 
                         <div class="tags">{% for t in article.tags %}
 
                             <a href="{{ SITEURL }}/{{ t.url }}" {%- if tag and tag.name == t.name %} class="selected"{% endif -%}>{{ t }}</a>
-                            {%- endfor %}
+                            {% endfor %}
 
                         </div>
                         {%- endif %}
@@ -34,5 +34,14 @@
 
                     </div>
                     <div class="clear"></div>
+                    {% if not articles_page %}
+                      {% include "disqus.html" %}
+                    {% else %}
+                    <div class='info left'>
+                      <a href="{{ SITEURL }}/{{ article.url }}#disqus_thread">Comments</a>
+                      <!-- -
+                      <a href="{{ SITEURL }}/{{ article.url }}">Permalink</a-->
+                    </div>
+                    {% endif %}
                 </div>
 
